@@ -6,24 +6,48 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
 
+const frontendUrls = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((url) => url.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+  "http://localhost:3000",
+  ...frontendUrls,
+];
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+
+      const cleanOrigin = origin.replace(/\/+$/, "");
+      let isAllowed = allowedOrigins.includes(cleanOrigin);
+
+      // Also allow Vercel preview/production deployments
+      if (!isAllowed) {
+        try {
+          const { hostname } = new URL(origin);
+          if (hostname.endsWith(".vercel.app")) {
+            isAllowed = true;
+          }
+        } catch (_) {}
+      }
+
+      if (isAllowed) {
         return callback(null, true);
       }
-      return callback(new Error("This origin is not allowed by CORS"));
+      return callback(null, false);
     },
     credentials: true,
   }),
 );
 
-// app.use(cors(corsOptions));
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
 
 const registerCrud = require("./routes/crud.routes");
 const productTypeModel = require("./models/producttype.model");

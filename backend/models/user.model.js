@@ -50,7 +50,8 @@ const userSchema = new mongoose.Schema(
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 
-// Drop leftover unique index on Phone from previous schema definitions in MongoDB
-userModel.collection.dropIndex("Phone_1").catch(() => {});
+if (userModel?.collection) {
+  userModel.collection.dropIndex("Phone_1").catch(() => {});
+}
 
 module.exports = userModel;

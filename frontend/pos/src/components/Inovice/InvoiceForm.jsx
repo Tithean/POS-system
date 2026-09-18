@@ -14,8 +14,8 @@ function InvoiceForm() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
-      const result = await axios.post(url, formData);
+      const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+      const result = await axios.post(cleanEndpoint, formData);
       toast.success(result.data.message || "Created successfully");
       if (handleView) handleView();
     } catch (error) {

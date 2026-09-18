@@ -7,6 +7,10 @@ module.exports = async (req, res) => {
     await connectDB();
     return app(req, res);
   } catch (error) {
-    return res.status(500).json({ message: "Database connection failed" });
+    console.error("Vercel Serverless Function Error:", error);
+    return res.status(500).json({
+      message: "Database connection failed",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
   }
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import axios from "../../api";
+import axios, { getImageUrl } from "../../api";
 import { TableFilter, TableFooter } from "./TableFilter";
 
 function Table({ deleteHandler, editHandler, columns, rows, endPoint }) {
@@ -32,10 +32,10 @@ function Table({ deleteHandler, editHandler, columns, rows, endPoint }) {
                       {row == "Picture" && item[row] ? (
                         <img
                           className="w-14 h-14 rounded-2xl object-cover"
-                          src={`${import.meta.env.VITE_API_URL}/upload/${item[row]}`}
+                          src={getImageUrl(item[row])}
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${import.meta.env.VITE_API_URL}/upload/image.png`;
+                            e.target.src = "/for_web_LOGO.png";
                           }}
                         />
                       ) : row == "ProductType" && item[row] ? (

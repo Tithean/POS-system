@@ -18,19 +18,21 @@ function Product() {
     handleView,
     setIsEdit,
   } = useContext(QueryContext);
-  //   const [showTable, setShowTable] = useState(true);
-  setLabel("ទំនិញ");
 
-  async function handleDelete(id) {}
+  useEffect(() => {
+    setLabel("ទំនិញ");
+  }, []);
 
   const deleteHandler = async (id) => {
-    const result = await axios.delete(
-      import.meta.env.VITE_API_URL + "/product/" + id,
-    );
-    toast.success(result.data.message, {
-      duration: 4000,
-      position: "top-right",
-    });
+    try {
+      const result = await axios.delete(`/product/${id}`);
+      toast.success(result.data.message, {
+        duration: 4000,
+        position: "top-right",
+      });
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Error deleting item");
+    }
   };
   const [defaultData, setDefaultData] = useState({});
   const editHandler = (item) => {

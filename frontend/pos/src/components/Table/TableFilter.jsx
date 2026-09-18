@@ -6,7 +6,8 @@ import useQuery from "../../hooks/useQuery";
 
 function TableFilter({ setData, endPoint }) {
   const { query, setQuery } = useContext(QueryContext);
-  const url = `${import.meta.env.VITE_API_URL}/${endPoint}?search=${query.search}&limit=${query.limit}&page=${query.page}`;
+  const cleanEndpoint = endPoint.startsWith("/") ? endPoint : `/${endPoint}`;
+  const url = `${cleanEndpoint}?search=${query.search}&limit=${query.limit}&page=${query.page}`;
   const { result, loading } = useQuery(url);
 
   function changeValue(name, value) {

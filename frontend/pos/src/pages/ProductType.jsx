@@ -35,9 +35,7 @@ function ProductTypePage() {
 
   async function handleDelete(id) {
     try {
-      const result = await axios.delete(
-        import.meta.env.VITE_API_URL + "/producttype/" + id,
-      );
+      const result = await axios.delete(`/producttype/${id}`);
       toast.success(result.data.message, {
         duration: 4000,
         position: "top-right",

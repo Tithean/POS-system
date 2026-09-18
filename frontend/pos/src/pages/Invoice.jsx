@@ -16,8 +16,7 @@ function Invoice() {
   const getInvoice = async () => {
     try {
       const response = await axios.get(
-        import.meta.env.VITE_API_URL +
-          `/api/invoice?startDate=${startDate}&endDate=${endDate}`,
+        `/api/invoice?startDate=${startDate}&endDate=${endDate}`,
       );
       setData(response.data.data);
     } catch (error) {
@@ -27,9 +26,7 @@ function Invoice() {
 
   const showInvoiceDetails = async (item) => {
     try {
-      const response = await axios.get(
-        import.meta.env.VITE_API_URL + `/api/invoice/${item._id}`,
-      );
+      const response = await axios.get(`/api/invoice/${item._id}`);
       setInvoiceNumber(item.InvoiceNumber);
       setInvoiceData(response.data.data);
       setInvoiceDate(item.createdAt);

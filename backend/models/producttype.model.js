@@ -9,6 +9,7 @@ const producttypeSchema = new mongoose.Schema({
   },
 });
 
-const producttypeModel = new mongoose.model("ProductType", producttypeSchema);
+const producttypeModel =
+  mongoose.models.ProductType || mongoose.model("ProductType", producttypeSchema);
 
 module.exports = producttypeModel;

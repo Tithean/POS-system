@@ -13,16 +13,13 @@ function ProductTypeForm({ defaultData, handleView, isEdit }) {
       e.preventDefault();
       if (isEdit) {
         const id = defaultData._id;
-        const url = import.meta.env.VITE_API_URL + "/producttype/" + id;
-        await axios.put(url, formData);
+        await axios.put(`/producttype/${id}`, formData);
         toast.success("Item has been updated", {
           duration: 4000,
           position: "top-right",
         });
-        handleView();
       } else {
-        const url = import.meta.env.VITE_API_URL + "/producttype";
-        await axios.post(url, formData);
+        await axios.post("/producttype", formData);
         toast.success("Item has been added", {
           duration: 4000,
           position: "top-right",

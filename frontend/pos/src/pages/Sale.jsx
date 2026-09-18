@@ -1,7 +1,7 @@
 import MasterPage from "../pages/MasterPage";
 import QueryContext from "../context/QueryContext";
 import { useState, useEffect, useContext, useCallback } from "react";
-import axios from "../api";
+import axios, { getImageUrl } from "../api";
 import toast from "react-hot-toast";
 import Modal from "../components/Modal";
 
@@ -92,7 +92,7 @@ function Sale() {
         return;
       }
       setIsSubmitting(true);
-      const result = await axios.post(import.meta.env.VITE_API_URL + "/sale", {
+      const result = await axios.post("/sale", {
         cart,
       });
 
@@ -185,10 +185,10 @@ function Sale() {
                 >
                   <img
                     className="w-24 h-24 object-cover rounded-lg"
-                    src={`${import.meta.env.VITE_API_URL}/upload/${item.Picture}`}
+                    src={getImageUrl(item.Picture)}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = `${import.meta.env.VITE_API_URL}/upload/image.png`;
+                      e.target.src = "/for_web_LOGO.png";
                     }}
                   />
                   <p className="text-center text-sm font-semibold text-[#1e3a5f] mt-2">{item.ProductName}</p>

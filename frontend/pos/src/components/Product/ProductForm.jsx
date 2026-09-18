@@ -22,8 +22,7 @@ function ProductForm({ endPoint, defaultData }) {
 
   const fetchProductType = async () => {
     try {
-      const pro_url = `${import.meta.env.VITE_API_URL}/producttype`;
-      const pro_result = await axios.get(pro_url);
+      const pro_result = await axios.get("/producttype");
       setProductType(pro_result.data.data || []);
     } catch (err) {
       console.error("Error fetching product types:", err);
@@ -66,16 +65,15 @@ function ProductForm({ endPoint, defaultData }) {
     submitData.append("ProductType", formdata.ProductType);
     submitData.append("NumberInStock", formdata.NumberInStock || 0);
 
-    let url = `${import.meta.env.VITE_API_URL}/${endPoint}`;
+    const cleanEndpoint = endPoint.startsWith("/") ? endPoint : `/${endPoint}`;
 
     try {
       let result;
       if (isEdit && defaultData._id) {
         const id = defaultData._id;
-        url = `${import.meta.env.VITE_API_URL}/${endPoint}/${id}`;
-        result = await axios.put(url, submitData);
+        result = await axios.put(`${cleanEndpoint}/${id}`, submitData);
       } else {
-        result = await axios.post(url, submitData);
+        result = await axios.post(cleanEndpoint, submitData);
       }
 
       toast.success(result.data.message || "ទំនិញត្រូវបានរក្សាទុកដោយជោគជ័យ!", {
