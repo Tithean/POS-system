@@ -1,0 +1,12 @@
+{
+  "UserID": "ADMIN-001",
+  "Username": "Admin",
+  "Email": "admin@gmail.com",
+  "Password": "admin",
+  "Gender": "Male",
+  "DateOfBirth": "2000-01-01",
+  "Address": "Phnom Penh, Cambodia",
+  "Role": "admin",
+  "StartDate": "2026-01-01",
+  "Phone": "012345678"
+}
