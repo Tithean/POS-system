@@ -13,7 +13,6 @@ const frontendUrls = (process.env.FRONTEND_URL || "")
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:3000",
   ...frontendUrls,
 ];
 
